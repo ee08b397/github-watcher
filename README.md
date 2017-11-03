@@ -29,6 +29,8 @@ username:
 So, for example, if I wanted to watch [this](https://github.com/akellehe/fb_calendar/blob/8cc6e867aa67732fab869872eec7586fd1a9c0c2/deploy/roles/fb_calendar_api/tasks/main.yml#L30-L40) line range I would use the configuration:
 
 ```yaml
+---
+
 akellehe:
   fb_calendar:
     deploy/roles/fb_calendar_api/tasks/main.yml
@@ -38,6 +40,8 @@ akellehe:
 Or if I wanted to watch the whole `deploy/` directory I would use:
 
 ```yaml
+---
+
 akellehe:
   fb_calendar:
     deploy/: null
