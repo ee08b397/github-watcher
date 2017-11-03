@@ -1,7 +1,7 @@
 Github Watcher
 ==============
 
-Github Watcher is a daemon that monitors the files/ line ranges and directories you configure it to. When there is a pull request sent making a change to that directory or those line ranges in those files; you'll get an OSX notification. There's also a really annoying voice that tells you what was found.
+Github Watcher is a daemon that monitors the files, line ranges, and directories in a repository you configure it to watch. When there is a pull request sent to that repository making a change to something you're watching; you'll get an OSX notification. There's also a really annoying voice that tells you what was found.
 
 Installation
 ------------
