@@ -1,22 +1,18 @@
 import json
+import subprocess
 import os.path
 import time
+import sys
 
 import unidiff
 import requests
 from pync import Notifier
+import yaml
 
 
 GITHUB_API = 'https://api.github.com'
 WATCHER_ALERT_LOG = '/tmp/watcher_alert.log'
 
-CONFIG = {
-    'akellehe': {
-        'fb_calendar': {
-            'deploy/': None
-        }
-    }
-}
 
 try:
     with open(os.path.join(os.path.expanduser('~'), '.github'), 'rb') as github_auth_fp:
@@ -31,6 +27,14 @@ except IOError as e:
     print "  6. click repo and user permissions checkboxes. next"
     print "  7. click Generate Token. "
     print "  8. SAVE THAT. copy/paste to ~/.github you will never see it again."
+    sys.exit(1)
+
+try:
+    with open(os.path.join(os.path.expanduser('~'), '.watch-github.yml'), 'rb') as config:
+        CONFIG = yaml.load(config.read())
+except IOError as e:
+    print "You must include a configuration of what to watch at ~/.watch-github.yml"
+    sys.exit(1)
 
 headers = {'Authorization': 'token {}'.format(oauth_token)}
 
@@ -70,11 +74,13 @@ def alert(user, repo, file, range, pr_link):
     msg = 'Found a PR effecting {file} {range}'.format(
 	file=file,
 	range=str(range))
-
+    subprocess.call('say ' + msg, shell=True)
     Notifier.notify(
 	msg,
 	title='Github Watcher',
         open=pr_link)
+    sys.stdout.write('\a')
+    sys.stdout.flush()
 
 
 def are_watched_lines(watchpaths, filepath, start, end):
